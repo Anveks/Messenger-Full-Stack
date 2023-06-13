@@ -3,9 +3,9 @@ import { request } from "http";
 
 const router = express.Router();
 
-router.get("/data", async(request: Request, response: Response, next: NextFunction) => {
+router.get("/", async(request: Request, response: Response, next: NextFunction) => {
   try{
-    //
+    response.send("Server routing works.")
   } catch(err: any) {
     next(err);
   }

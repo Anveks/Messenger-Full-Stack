@@ -1,29 +1,24 @@
-import express, { Request, Response } from 'express';
-import { Server, Socket } from "socket.io";
-import http from 'http';
-import path from 'path';
+import express from 'express';
+import routeNotFound from './3-middleware/route-not-found';
+import catchAll from './3-middleware/catch-all';
+import appConfig from './4-utils/app-config';
+import socketIoService from './5-services/socket.io-service';
+import dataRoutes from './6-routes/data-routes';
+import authRoutes from './6-routes/auth-routes';
+import dotenv from 'dotenv'
 
-const app = express();
-const expressServer = http.createServer(app);
-const io = new Server(expressServer);
-app.use(express.static('../Frontend/build'));
+// first server (with express)
+const expressServer = express();
+expressServer.use("/api", dataRoutes);
+expressServer.use("/api", authRoutes);
+expressServer.use(routeNotFound);
+expressServer.use(catchAll);
 
-app.get('*', (request: Request, response: Response) => {
-  response.sendFile(path.resolve('..', 'Frontend', 'build', 'index.html'));
-});
+dotenv.config({ path: './config.env' });
+console.log(process.env.PORT);
 
-// Socket.io event handling
-io.on('connection', (socket: Socket) => {
-  console.log(`New user connected: ${socket.id}`);
+const httpServer = expressServer.listen(appConfig.port, () => console.log("Listening on http://localhost:" + appConfig.port));
 
-  socket.emit('server-message', 'this is a message from server');
+// init socket.io logic:
+socketIoService.init(httpServer);
 
-
-  socket.on('disconnect', () => {
-    console.log(`User disconnected: ${socket.id}`);
-  });
-});
-
-expressServer.listen((5000), () => {
-  console.log('Server is running on port: http://localhost:5000/');
-});

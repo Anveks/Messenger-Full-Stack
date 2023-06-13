@@ -1,7 +1,9 @@
+require('dotenv').config();
+
 class AppConfig {
 
     // Server Port:
-    public port = 4000;
+    public port = process.env.PORT || 4000;
 
     // Database Host (on which computer the database exists):
     public mySqlHost = "localhost";
