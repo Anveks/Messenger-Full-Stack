@@ -7,9 +7,11 @@ import dataRoutes from './6-routes/data-routes';
 import authRoutes from './6-routes/auth-routes';
 import dotenv from 'dotenv'
 import dal from './4-utils/dal';
+import cors from 'cors';
 
 // first server (with express)
 const expressServer = express();
+expressServer.use(cors());
 expressServer.use(express.json());
 expressServer.use("/api", dataRoutes);
 expressServer.use("/api", authRoutes);
