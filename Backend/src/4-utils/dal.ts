@@ -1,37 +1,16 @@
-import mysql from "mysql";
-import appConfig from "./app-config";
+import mongoose from 'mongoose';
+import appConfig from './app-config';
 
-// Create a connection to MySQL's northwind database:
-const connection = mysql.createPool({
-    host: appConfig.mySqlHost,
-    user: appConfig.mySqlUser,
-    password: appConfig.mySqlPassword,
-    database: appConfig.mySqlDatabase
-});
-
-// Execute any sql: 
-// with values against sql injection
-function execute(sql: string, values?: any): Promise<any> {
-
-    // Promisify:
-    return new Promise<any>((resolve, reject) => {
-
-        // Execute query in database:
-        connection.query(sql, values, (err, result) => {
-
-            // If query failed:
-            if(err) {
-                reject(err);
-                return;
-            }
-
-            // Query succeeded:
-            resolve(result);
-
-        });
-    });
-}
+async function connect(): Promise<void>{
+  try {
+    const db = await mongoose.connect(appConfig.connectionString);
+    console.log((`We're connected to ${db.connections[0].name} on MongoDB.`));
+    
+  } catch(err: any) {
+    console.log(err.message);
+  }
+} 
 
 export default {
-    execute
-};
+  connect
+}

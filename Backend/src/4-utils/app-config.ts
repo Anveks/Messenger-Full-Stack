@@ -1,23 +1,15 @@
-require('dotenv').config();
-
 class AppConfig {
 
     // Server Port:
-    public port = process.env.PORT || 4000;
+    public port = 4000;
 
-    // Database Host (on which computer the database exists):
-    public mySqlHost = "localhost";
+    // mongo db conenction string:
+    public connectionString = "mongodb://127.0.0.1:27017/messenger" // 127.0.0.1 this pc's address
 
-    // Database User
-    public mySqlUser = "root";
-
-    // Database Password: 
-    public mySqlPassword = "";
-
-    // Database Name: 
-    public mySqlDatabase = "___"; // fill in database namenpm 
 }
 
 const appConfig = new AppConfig();
 
 export default appConfig;
+
+
