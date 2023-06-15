@@ -28,18 +28,18 @@ router.post("/message", verifyLoggedIn, async(request: Request, response: Respon
 });
 
 // get message history
-router.get("/history", verifyLoggedIn, async(request: Request, response: Response, next: NextFunction) => {
+router.get("/history/:id([a-zA-Z0-9]+)", verifyLoggedIn, async(request: Request, response: Response, next: NextFunction) => {
   try{
     let userId1;
-    const userId2 = request.body.userId2;
+    const userId2 = request.params.id;
     const header = request.headers.authorization; // get the authorization header
     if (header) {
       const token = header.substring(7); // extract token
       const user = await cyber.decodeToken(token);    
-      userId1 = user._doc._id;
+      userId1 = user._doc._id;    
     } 
     const messageHistory = await dataService.getMessageHistory(userId1, userId2);
-    response.json(messageHistory);
+    response.send(messageHistory);
   } catch(err: any) {
     next(err);
   }

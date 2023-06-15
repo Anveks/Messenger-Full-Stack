@@ -7,7 +7,7 @@ export class UsersState {
 }
 
 export enum UsersActionType {
-  fetchUsers
+  FetchUsers
 }
 
 export interface UsersAction {
@@ -20,8 +20,9 @@ export function usersReducer(currentState = new UsersState(), action: UsersActio
   const newState = { ...currentState };
 
   switch (action.type) {
-    case UsersActionType.fetchUsers:
+    case UsersActionType.FetchUsers:
         newState.users = action.payload;
+        break;
       }
 
   return newState;

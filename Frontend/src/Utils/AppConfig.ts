@@ -7,6 +7,9 @@ class AppConfig {
     public usersUrl = 'http://localhost:4000/api/home/'
     public newMessageUrl = 'http://localhost:4000/api/message/'
     public messageHistoryUrl = 'http://localhost:4000/api/history/'
+
+    // socket URL:
+    public socketUrl = 'http://localhost:4000'
 }
 
 const appConfig = new AppConfig();

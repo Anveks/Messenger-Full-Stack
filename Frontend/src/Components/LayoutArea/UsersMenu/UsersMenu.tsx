@@ -9,14 +9,17 @@ import { authStore } from "../../../Redux/AuthState";
 function UsersMenu(): JSX.Element {
     const [users, setUsers] = useState<UserModel[]>([]);
     useEffect(() => {
-        messengerService.getAllUsers()
+        messengerService
+            .getAllUsers()
             .then((res) => setUsers(res))
             .catch((err: any) => { notifyService.error(err.message) });
     }, []);
 
     function handleMessagesHistory(id: string) {
-        // UsersMenu handles the MessafeField from here
-        console.log(id);
+        messengerService.getMessageHistory(id);
+
+        // create a socket.io room/join if exists:
+
     }
 
     return (

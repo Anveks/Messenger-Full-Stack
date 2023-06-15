@@ -1,14 +1,14 @@
 import { createStore } from "redux";
-import jwtDecode from "jwt-decode";
-import UserModel from "../Models/UserModel";
+import MessageModel from "../Models/MessageModel";
 
 export class MessengerState {
-
-// messenger state
+    public messages: MessageModel[] = [];
 }
 
 export enum MessengerActionType {
-// action types
+    FetchMessages,
+    UpdateMessages,
+    AddNewMessage,
 }
 
 export interface MessengerAction {
@@ -21,7 +21,9 @@ export function messengerReducer(currentState = new MessengerState(), action: Me
     const newState = { ...currentState };
 
     switch (action.type) {
-// actions here
+        case MessengerActionType.FetchMessages:
+            newState.messages = action.payload;
+            break;
     }
 
     return newState;

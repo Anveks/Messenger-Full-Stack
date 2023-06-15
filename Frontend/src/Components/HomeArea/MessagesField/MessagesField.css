@@ -1,3 +1,25 @@
 .MessagesField {
-	
+	/* display: flex;
+  flex-direction: column; */
+  height: 100%;
+  background-color: lightgrey;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.message-container::-webkit-scrollbar{
+  display: none;
+}
+
+.messages {
+  flex: 4;
+}
+
+.sendBar {
+  position: fixed;
+  bottom: 5.5%;
+  width: 82%;
+  height: 8%;
+  background-color: whitesmoke;
 }
