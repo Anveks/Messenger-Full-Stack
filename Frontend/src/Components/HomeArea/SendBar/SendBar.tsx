@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import "./SendBar.css";
+import SendIcon from '@mui/icons-material/Send';
 
 function SendBar(props: any): JSX.Element {
     const inputRef = useRef(null);
@@ -15,7 +16,7 @@ function SendBar(props: any): JSX.Element {
         <div className="SendBar">
             <form onSubmit={handleSend}>
                 <input type="text" name="message" ref={inputRef} />
-                <button type="submit">Send</button>
+                <button type="submit">Send <SendIcon /></button>
             </form>
         </div>
     );

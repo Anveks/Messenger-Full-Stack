@@ -1,0 +1,14 @@
+.Home {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sendBarContainer {
+  position: fixed;
+  bottom: 7%;
+  width: 80%;
+  height: 10%;
+  display: flex;
+  background-color: lightgray;
+}

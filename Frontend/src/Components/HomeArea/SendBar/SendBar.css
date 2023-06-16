@@ -1,5 +1,37 @@
+.SendBar {
+  background-color: lightgray;
+  display: flex;
+  padding-left: 35%;
+}
+
 .SendBar > form {
 	display: flex;
   justify-content: center;
   margin-top: 1%;
+  gap: 1%;
+  align-items: center;
+}
+
+.SendBar > form > input {
+  padding: 3%;
+  border-radius: 12px;
+}
+
+.SendBar > form > button {
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 15%;
+  font-weight: bold;
+  /* background-color: rgba(255, 255, 255, 0.5); */
+  width: 7%;
+  border-radius: 12px;
+  padding-left: 1%;
+}
+
+.SendBar > form > button:hover {
+  color: orangered;
+  transition: .5s;
+  transform: scale(1.1);
 }

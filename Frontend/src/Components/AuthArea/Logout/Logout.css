@@ -1,0 +1,8 @@
+.Logout > a {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 10%;
+  font-weight: bold;
+}
+

@@ -1,3 +1,18 @@
 .Header {
-	
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1% 2%;
+}
+
+.Header > .title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 10%;
+  font-weight: bold;
 }

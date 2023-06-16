@@ -8,7 +8,7 @@ class UserModel{
   public profilePicture: string;
   public lastActive: string;
   public isOnline: boolean;
-    _doc: any;
+    _doc: any; // unknown stuff from mongo db
 }
 
 export default UserModel;

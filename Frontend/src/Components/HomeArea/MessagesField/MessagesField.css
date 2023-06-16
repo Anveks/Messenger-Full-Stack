@@ -1,25 +1,18 @@
 .MessagesField {
-	/* display: flex;
-  flex-direction: column; */
   height: 100%;
   background-color: lightgrey;
   width: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: transparent transparent; /* For Firefox */
 }
 
-.message-container::-webkit-scrollbar{
-  display: none;
+.MessagesField::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+  background-color: transparent; /* Background color of the scrollbar */
 }
 
-.messages {
-  flex: 4;
-}
-
-.sendBar {
-  position: fixed;
-  bottom: 5.5%;
-  width: 82%;
-  height: 8%;
-  background-color: whitesmoke;
+.MessagesField::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Color of the scrollbar thumb */
 }
