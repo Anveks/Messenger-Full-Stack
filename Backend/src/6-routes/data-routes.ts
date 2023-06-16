@@ -20,7 +20,7 @@ router.get("/home", verifyLoggedIn, async(request: Request, response: Response, 
 router.post("/message", verifyLoggedIn, async(request: Request, response: Response, next: NextFunction) => {
   try{
     const message = new MessageModel(request.body);
-    const newMessage = await dataService.sendMessage(message);
+    const newMessage = await dataService.saveMessage(message);
     response.json(newMessage);
   } catch(err: any) {
     next(err);

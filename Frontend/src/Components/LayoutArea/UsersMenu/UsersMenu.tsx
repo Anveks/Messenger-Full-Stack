@@ -5,6 +5,8 @@ import messengerService from "../../../Services/MessengerService";
 import notifyService from "../../../Services/NotifyService";
 import UserCard from "../UserCard/UserCard";
 import { authStore } from "../../../Redux/AuthState";
+import socketIoService from "../../../Services/SocketIoService";
+import { MessengerActionType, messengerStore } from "../../../Redux/MessengerState";
 
 function UsersMenu(): JSX.Element {
     const [users, setUsers] = useState<UserModel[]>([]);
@@ -18,8 +20,13 @@ function UsersMenu(): JSX.Element {
     function handleMessagesHistory(id: string) {
         messengerService.getMessageHistory(id);
 
-        // create a socket.io room/join if exists:
+        // save recipient id in redux:
+        messengerStore.dispatch({ type: MessengerActionType.UpdateRecipientId, payload: id });
 
+        // join/create a socket.io room:
+        const currentUserId = authStore.getState().user._doc._id;
+        const roomName = [currentUserId, id].sort().join('-'); // creating a consistent pattern regardless if userId is different
+        socketIoService.joinRoom(roomName);
     }
 
     return (

@@ -3,12 +3,14 @@ import MessageModel from "../Models/MessageModel";
 
 export class MessengerState {
     public messages: MessageModel[] = [];
+    public currentRecipientId: string;
 }
 
 export enum MessengerActionType {
     FetchMessages,
     UpdateMessages,
     AddNewMessage,
+    UpdateRecipientId
 }
 
 export interface MessengerAction {
@@ -24,6 +26,9 @@ export function messengerReducer(currentState = new MessengerState(), action: Me
         case MessengerActionType.FetchMessages:
             newState.messages = action.payload;
             break;
+        case MessengerActionType.UpdateRecipientId:
+            newState.currentRecipientId = action.payload;
+            break;    
     }
 
     return newState;

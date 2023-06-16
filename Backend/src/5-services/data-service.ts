@@ -7,10 +7,12 @@ async function getAllUsers(): Promise<IUserModel[]>{
   return users;
 }
 
-async function sendMessage(message: IMessageModel): Promise<IMessageModel> {
+async function saveMessage(message: IMessageModel): Promise<IMessageModel> {
   const err = message.validateSync();
   if (err) throw new ValidationError(err.message);
   await message.save();
+  console.log(message);
+  
   return message;
 }
 
@@ -27,6 +29,6 @@ async function getMessageHistory(userId1: string, userId2: string): Promise<IMes
 
 export default {
   getAllUsers,
-  sendMessage,
+  saveMessage,
   getMessageHistory
 }

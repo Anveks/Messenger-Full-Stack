@@ -7,8 +7,7 @@ function SendBar(props: any): JSX.Element {
     const handleSend = (e: React.FormEvent) => {
         e.preventDefault();
         const message = inputRef.current?.value;
-        console.log(message);
-        // Perform any desired actions with the message value
+        props.getMessage(message);
     };
 
     return (

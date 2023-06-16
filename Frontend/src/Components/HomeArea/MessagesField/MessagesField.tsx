@@ -5,6 +5,8 @@ import "./MessagesField.css";
 import { messengerStore } from "../../../Redux/MessengerState";
 import Message from "../Message/Message";
 import ScrollToBottom from 'react-scroll-to-bottom';
+import { authStore } from "../../../Redux/AuthState";
+import socketIoService from "../../../Services/SocketIoService";
 
 function MessagesField(): JSX.Element {
 
@@ -20,8 +22,19 @@ function MessagesField(): JSX.Element {
 
     }, []);
 
-    function handleSendMessage() {
+    const recepientId = messengerStore.getState().currentRecipientId;
 
+    function handleSendMessage(messageContent: string) {
+        const currentId = authStore.getState().user._doc._id;
+        const roomName = [currentId, recepientId].sort().join("-");
+        const message: any = {
+            sender: authStore.getState().user._doc._id,
+            recipient: recepientId,
+            content: messageContent,
+            timestamp: new Date().toISOString()
+        };
+
+        socketIoService.sendMessage(roomName, message);
     }
 
 
@@ -31,10 +44,10 @@ function MessagesField(): JSX.Element {
             <ScrollToBottom className="messages">
                 {messages.length === 0
                     ? <p>messages will be displayed here</p>
-                    : messages.map((m) => <Message key={m._id} message={m} getMessage={handleSendMessage} />)}
+                    : messages.map((m) => <Message key={m._id} message={m} getRecepientId={handleSendMessage} />)}
             </ScrollToBottom>
 
-            <div className="sendBar"><SendBar /></div>
+            <div className="sendBar"><SendBar getMessage={handleSendMessage} /></div>
 
         </div>
     );

@@ -1,10 +1,10 @@
+import { useEffect } from "react";
 import MessageModel from "../../../Models/MessageModel";
 import { authStore } from "../../../Redux/AuthState";
 import "./Message.css";
 
 function Message(props: any): JSX.Element {
     const { sender, recepient, content, timestamp } = props.message;
-    console.log(sender);
 
     function getTime(date: string) {
         const time = new Date(date);
