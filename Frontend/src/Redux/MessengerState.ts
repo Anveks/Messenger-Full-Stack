@@ -28,7 +28,10 @@ export function messengerReducer(currentState = new MessengerState(), action: Me
             break;
         case MessengerActionType.UpdateRecipientId:
             newState.currentRecipientId = action.payload;
-            break;    
+            break;
+        case MessengerActionType.UpdateMessages:
+            newState.messages = [...newState.messages, action.payload];
+            break;        
     }
 
     return newState;

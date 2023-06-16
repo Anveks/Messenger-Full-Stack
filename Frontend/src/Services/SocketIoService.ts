@@ -1,6 +1,7 @@
 import { Socket, io } from "socket.io-client";
+import MessageModel from "../Models/MessageModel";
 import appConfig from "../Utils/AppConfig";
-import notifyService from "./NotifyService";
+import { MessengerActionType, messengerStore } from "../Redux/MessengerState";
 
 class SocketIoService {
 
@@ -18,6 +19,10 @@ class SocketIoService {
 
   public sendMessage(roomName: string, message: string): void{
     this.socket.emit('sendMessage', { roomName, message }); // sending a message to a room
+  }
+
+  public getNewMessage(callback: (message: any) => void): void {
+    this.socket.on('newMessage', callback);
   }
 
 };

@@ -8,6 +8,7 @@ function SendBar(props: any): JSX.Element {
         e.preventDefault();
         const message = inputRef.current?.value;
         props.getMessage(message);
+        inputRef.current.value = "";
     };
 
     return (

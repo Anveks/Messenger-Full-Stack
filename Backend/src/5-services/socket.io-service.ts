@@ -18,21 +18,15 @@ function init(httpServer: http.Server): void {
   });
 
   socket.on('sendMessage', async ({roomName, message}) => {
-    socket.to(roomName).emit('newMessage', message);
-    // console.log(message);
     try {
-      console.log(message);
-      
-      const newMessage = new MessageModel(message);
-      console.log(newMessage);
-      
-      await dataService.saveMessage(newMessage);
+      const newMessage = new MessageModel(message); // creating messageModel
+      await dataService.saveMessage(newMessage); // sending it to the server
+      socketServer.to(roomName).emit('newMessage', newMessage);
     } catch(err: any){
         console.log(err.message);
     } 
 
     // add newMessage listener on client side
-    // add sending message to the database
   })
     
     socket.on('disconnect', () => {

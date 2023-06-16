@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import MessageModel from "../../../Models/MessageModel";
 import SendBar from "../SendBar/SendBar";
 import "./MessagesField.css";
-import { messengerStore } from "../../../Redux/MessengerState";
+import { MessengerActionType, messengerStore } from "../../../Redux/MessengerState";
 import Message from "../Message/Message";
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { authStore } from "../../../Redux/AuthState";
@@ -13,13 +13,18 @@ function MessagesField(): JSX.Element {
     const [messages, setMessages] = useState<MessageModel[]>(messengerStore.getState().messages);
 
     useEffect(() => {
-
         const unsubscribe = messengerStore.subscribe(() => {
             setMessages(messengerStore.getState().messages);
         });
 
         return () => unsubscribe();
 
+    }, []);
+
+    useEffect(() => {
+        socketIoService.getNewMessage((message) => {
+            setMessages((prevMessages) => [...prevMessages, message]);
+        });
     }, []);
 
     const recepientId = messengerStore.getState().currentRecipientId;
@@ -36,6 +41,7 @@ function MessagesField(): JSX.Element {
 
         socketIoService.sendMessage(roomName, message);
     }
+
 
 
     return (
