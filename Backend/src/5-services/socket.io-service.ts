@@ -25,9 +25,12 @@ function init(httpServer: http.Server): void {
     } catch(err: any){
         console.log(err.message);
     } 
+  });
 
-    // add newMessage listener on client side
-  })
+  socket.on("updateStatus", (data) => { // getting updated data on login-logout
+    socketServer.emit('statusUpdated', data); // emitting the data back to all clients
+    dataService.updateUserOnlineStatus(data.userId, data.isOnline);
+  });
     
     socket.on('disconnect', () => {
       console.log(`Client ${socket.id} has disconnected.`);

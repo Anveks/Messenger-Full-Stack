@@ -7,6 +7,7 @@ import UserCard from "../UserCard/UserCard";
 import { authStore } from "../../../Redux/AuthState";
 import socketIoService from "../../../Services/SocketIoService";
 import { MessengerActionType, messengerStore } from "../../../Redux/MessengerState";
+import { usersStore } from "../../../Redux/UsersState";
 
 function UsersMenu(): JSX.Element {
     const [users, setUsers] = useState<UserModel[]>([]);

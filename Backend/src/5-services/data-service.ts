@@ -1,10 +1,18 @@
-import { ValidationError } from "../2-models/client-errors";
+import { ResourceNotFoundError, ValidationError } from "../2-models/client-errors";
 import { IMessageModel, MessageModel } from "../2-models/message-model";
 import { IUserModel, UserModel } from "../2-models/user-model";
 
 async function getAllUsers(): Promise<IUserModel[]>{
   const users = await UserModel.find().exec();
   return users;
+}
+
+async function updateUserOnlineStatus(userId: string, isOnline: boolean) {
+  const user = await UserModel.findOne({ _id: userId });
+  if (user) {
+      user.isOnline = isOnline;
+      await user.save();
+  }
 }
 
 async function saveMessage(message: IMessageModel): Promise<IMessageModel> {
@@ -30,5 +38,6 @@ async function getMessageHistory(userId1: string, userId2: string): Promise<IMes
 export default {
   getAllUsers,
   saveMessage,
-  getMessageHistory
+  getMessageHistory,
+  updateUserOnlineStatus
 }

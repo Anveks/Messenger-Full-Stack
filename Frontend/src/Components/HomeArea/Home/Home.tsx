@@ -35,9 +35,9 @@ function Home(): JSX.Element {
     return (
         <div className="Home">
             <MessagesField />
-            <div className="sendBarContainer">
+            {recipientId !== undefined && <div className="sendBarContainer">
                 <SendBar getMessage={handleSendMessage} />
-            </div>
+            </div>}
         </div>
     );
 }

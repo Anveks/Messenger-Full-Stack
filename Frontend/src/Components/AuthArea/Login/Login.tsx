@@ -4,19 +4,21 @@ import notifyService from "../../../Services/NotifyService";
 import authService from "../../../Services/AuthService";
 import { authStore } from "../../../Redux/AuthState";
 import { useNavigate } from "react-router-dom";
+import socketIoService from "../../../Services/SocketIoService";
 
 function Login(): JSX.Element {
 
     const { register, handleSubmit } = useForm<CredentialsModel>();
     const navigate = useNavigate();
 
-    console.log(authStore.getState().user);
-
     async function submit(credentials: CredentialsModel) {
         try {
             await authService.login(credentials);
-            console.log(authStore.getState().user);
             notifyService.success("Welcome back!");
+
+            const currentId = authStore.getState().user._id;
+            socketIoService.updateOnlineStatus(true);
+
             navigate("/")
         } catch (err: any) {
             notifyService.error(err);

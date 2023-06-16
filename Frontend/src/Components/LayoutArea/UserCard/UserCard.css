@@ -5,7 +5,7 @@
 }
 
 .UserCard:hover{
-  background-color: lightblue;
+  background-color: lightgrey;
   transition: .5s;
   cursor: pointer;
 }

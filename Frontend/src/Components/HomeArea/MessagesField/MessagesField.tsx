@@ -27,7 +27,6 @@ function MessagesField(props: any): JSX.Element {
         });
     }, []);
 
-
     return (
         <ScrollToBottom className="MessagesField">
 
