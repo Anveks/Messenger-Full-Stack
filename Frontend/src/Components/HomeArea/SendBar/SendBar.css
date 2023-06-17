@@ -1,8 +1,10 @@
 .SendBar {
   background-color: lightgray;
   display: flex;
-  padding-left: 35%;
+  padding-left: 30%;
+  width: inherit;
 }
+
 
 .SendBar > form {
 	display: flex;
@@ -15,6 +17,9 @@
 .SendBar > form > input {
   padding: 3%;
   border-radius: 12px;
+  border: transparent;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  width: 300px;
 }
 
 .SendBar > form > button {

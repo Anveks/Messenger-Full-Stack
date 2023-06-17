@@ -13,9 +13,9 @@ full stack chat app
 - login register logout features
 - sending messages
 - getting messages
+- user online-offline icons
 
 TODO:
-- user online-offline icons
 - new messages notfications
 - edit a message
 - delete a message

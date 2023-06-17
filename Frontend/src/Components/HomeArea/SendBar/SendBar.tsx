@@ -15,7 +15,7 @@ function SendBar(props: any): JSX.Element {
     return (
         <div className="SendBar">
             <form onSubmit={handleSend}>
-                <input type="text" name="message" ref={inputRef} />
+                <input type="text" name="message" ref={inputRef} placeholder="Message..." />
                 <button type="submit">Send <SendIcon /></button>
             </form>
         </div>
