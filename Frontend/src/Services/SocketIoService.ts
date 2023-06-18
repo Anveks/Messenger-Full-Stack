@@ -26,6 +26,10 @@ class SocketIoService {
     this.socket.on('newMessage', callback);
   }
 
+  // public getNewUnreadMessage(callback: (message: any) => void): void {
+  //   this.socket.on("newUnreadMessage", callback);
+  // }
+
   public updateOnlineStatus(isOnline: boolean): void {
     const userId = authStore.getState().user._doc._id;
     console.log(userId, isOnline);

@@ -1,5 +1,6 @@
 import { ResourceNotFoundError, ValidationError } from "../2-models/client-errors";
 import { IMessageModel, MessageModel } from "../2-models/message-model";
+import { IUnreadMessage } from "../2-models/unread-message-model";
 import { IUserModel, UserModel } from "../2-models/user-model";
 
 async function getAllUsers(): Promise<IUserModel[]>{
@@ -15,12 +16,23 @@ async function updateUserOnlineStatus(userId: string, isOnline: boolean) {
   }
 }
 
+async function addUnreadMessage(userId: string, message: IUnreadMessage): Promise<void> {
+  await UserModel.updateOne(
+    { _id: userId },
+    { $push: { unreadMessages: message } }
+  );
+}
+
+async function clearUnreadMessages(userId: string, senderId: string): Promise<void>{
+  // find user
+  // get his unread messages
+  // delete all the unread messages with certain senderId
+}
+
 async function saveMessage(message: IMessageModel): Promise<IMessageModel> {
   const err = message.validateSync();
   if (err) throw new ValidationError(err.message);
-  await message.save();
-  console.log(message);
-  
+  await message.save();  
   return message;
 }
 
@@ -39,5 +51,6 @@ export default {
   getAllUsers,
   saveMessage,
   getMessageHistory,
-  updateUserOnlineStatus
+  updateUserOnlineStatus,
+  addUnreadMessage
 }

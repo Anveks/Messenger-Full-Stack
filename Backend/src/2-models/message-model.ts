@@ -5,6 +5,7 @@ export interface IMessageModel extends mongoose.Document {
   recipient: string;
   content: string;
   timestamp: string;
+  isRead: boolean;
 }
 
 export const MessageSchema = new mongoose.Schema<IMessageModel>({
@@ -23,6 +24,11 @@ export const MessageSchema = new mongoose.Schema<IMessageModel>({
   timestamp: {
     type: String,
     required: [true, 'Timestamp is required.']
+  },
+  isRead: {
+    type: Boolean,
+    reqired: [true, 'isRead is required.'],
+    default: false,
   }
 }, {
   versionKey: false

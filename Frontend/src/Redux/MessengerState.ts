@@ -4,13 +4,16 @@ import MessageModel from "../Models/MessageModel";
 export class MessengerState {
     public messages: MessageModel[] = [];
     public currentRecipientId: string;
+    public unreadMessges: MessageModel[] = [];
 }
 
 export enum MessengerActionType {
     FetchMessages,
     UpdateMessages,
     AddNewMessage,
-    UpdateRecipientId
+    UpdateRecipientId,
+    AddUnreadMessage,
+    UpdateUnreadMessages
 }
 
 export interface MessengerAction {
@@ -31,7 +34,12 @@ export function messengerReducer(currentState = new MessengerState(), action: Me
             break;
         case MessengerActionType.UpdateMessages:
             newState.messages = [...newState.messages, action.payload];
-            break;        
+            break;  
+        case MessengerActionType.AddUnreadMessage:
+            newState.unreadMessges = [...newState.unreadMessges, action.payload];
+            break;
+        case MessengerActionType.UpdateUnreadMessages:
+            //    
     }
 
     return newState;

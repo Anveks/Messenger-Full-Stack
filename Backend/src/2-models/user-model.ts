@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
+import { IUnreadMessage } from './unread-message-model';
 
 export interface IUserModel extends mongoose.Document {
   username: string;
@@ -9,10 +10,11 @@ export interface IUserModel extends mongoose.Document {
   profilePicture: string;
   lastActive: string;
   isOnline: boolean;
+  unreadMessages: IUnreadMessage[]; // adding an array of unread messages -> each follows the IUnreadMessage model; i hope it is a good practice...
 }
 
 export const UserSchema = new mongoose.Schema<IUserModel>({
-  username:{
+  username: {
     type: String,
     trim: true,
     unique: true,
@@ -20,14 +22,14 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
     minlength: [2, "Username too short."],
     maxlength: [100, "Username too long."]
   },
-  firstName:{
+  firstName: {
     type: String,
     trim: true,
     required: [true, "First name is required."],
     minlength: [2, "First name too short."],
     maxlength: [100, "First name too long."]
   },
-  lastName:{
+  lastName: {
     type: String,
     trim: true,
     required: [true, "Last name is required."],
@@ -42,7 +44,7 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
     minlength: [2, "Email too short."],
     maxlength: [100, "Email too long."]
   },
-  password:{
+  password: {
     type: String,
     trim: true,
     required: [true, 'Password is required.'],
@@ -50,14 +52,16 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
     maxlength: [2000, "Password too long."]
   },
   lastActive: {
-    type: String,
+    type: String
   },
   isOnline: {
     type: Boolean
-  }
+  },
+  unreadMessages: [{ 
+    type: Schema.Types.ObjectId, 
+    ref: 'UnreadMessage' }] // UnreadMessages array
 }, {
   versionKey: false
 });
 
 export const UserModel = mongoose.model<IUserModel>("UserModel", UserSchema, 'users');
-// model name - schema - collection name 

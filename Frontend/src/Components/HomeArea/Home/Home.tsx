@@ -3,7 +3,7 @@ import MessagesField from "../MessagesField/MessagesField";
 import SendBar from "../SendBar/SendBar";
 import "./Home.css";
 import { authStore } from "../../../Redux/AuthState";
-import { messengerStore } from "../../../Redux/MessengerState";
+import { MessengerActionType, messengerStore } from "../../../Redux/MessengerState";
 import socketIoService from "../../../Services/SocketIoService";
 
 function Home(): JSX.Element {
@@ -29,7 +29,7 @@ function Home(): JSX.Element {
         };
 
         socketIoService.sendMessage(roomName, message);
-    }
+    };
 
 
     return (

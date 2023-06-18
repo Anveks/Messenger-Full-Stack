@@ -4,6 +4,7 @@ class MessageModel{
   public recipient: string;
   public content: string;
   public timestamp: string;
+  public isRead: boolean;
 }
 
 export default MessageModel;

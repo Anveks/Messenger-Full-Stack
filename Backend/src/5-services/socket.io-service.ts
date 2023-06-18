@@ -2,6 +2,8 @@ import http from 'http';
 import socketIo from 'socket.io';
 import { MessageModel } from '../2-models/message-model';
 import dataService from './data-service';
+import { IUnreadMessage } from '../2-models/unread-message-model';
+import mongoose from 'mongoose';
 
 function init(httpServer: http.Server): void {
   const options = { cors: {origin: '*'} };
@@ -21,6 +23,16 @@ function init(httpServer: http.Server): void {
     try {
       const newMessage = new MessageModel(message); // creating messageModel
       await dataService.saveMessage(newMessage); // sending it to the server
+
+      const { sender, recipient, content, timestamp } = newMessage; // destructure the newMessage obj    
+
+      const unreadMessage: IUnreadMessage = {
+        sender,
+        messageBody: content,
+        timestamp,
+      };
+
+      await dataService.addUnreadMessage(recipient, unreadMessage);
       socketServer.to(roomName).emit('newMessage', newMessage);
     } catch(err: any){
         console.log(err.message);

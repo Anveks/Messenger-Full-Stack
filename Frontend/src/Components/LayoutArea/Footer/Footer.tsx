@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer(): JSX.Element {
     return (
         <div className="Footer">
-            this is footer
+            <p>Demo Chat App v.2</p>
         </div>
     );
 }
