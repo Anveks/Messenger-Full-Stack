@@ -18,6 +18,8 @@ function UsersMenu(): JSX.Element {
             .catch((err: any) => { notifyService.error(err.message) });
     }, []);
 
+    console.log(users);
+
     function handleMessagesHistory(id: string) {
         messengerService.getMessageHistory(id);
 

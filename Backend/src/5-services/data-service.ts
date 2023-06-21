@@ -1,6 +1,6 @@
 import { ResourceNotFoundError, ValidationError } from "../2-models/client-errors";
 import { IMessageModel, MessageModel } from "../2-models/message-model";
-import { IUnreadMessage } from "../2-models/unread-message-model";
+import { IUnreadMessage, UnreadMessageModel } from "../2-models/unread-message-model";
 import { IUserModel, UserModel } from "../2-models/user-model";
 
 async function getAllUsers(): Promise<IUserModel[]>{
@@ -30,11 +30,28 @@ async function clearUnreadMessages(userId: string, senderId: string): Promise<vo
 }
 
 async function saveMessage(message: IMessageModel): Promise<IMessageModel> {
+  const { sender, recipient, content, timestamp } = message;
+
+  // Saving a new message
   const err = message.validateSync();
   if (err) throw new ValidationError(err.message);
   await message.save();  
+
+  // Saving an unreadMessage
+  const newUnreadMessage = {
+    sender: sender,
+    content: content,
+    timestamp: timestamp
+  };
+  const user = await UserModel.findById(recipient);
+  if (!user) throw new Error('Recipient user not found.');
+  user.unreadMessages.push(newUnreadMessage);
+  await user.save();
+
   return message;
 }
+
+
 
 async function getMessageHistory(userId1: string, userId2: string): Promise<IMessageModel[]> {
   const messages = await MessageModel.find({

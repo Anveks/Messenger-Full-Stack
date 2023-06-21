@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { IUnreadMessage } from './unread-message-model';
+import { IUnreadMessage, UnreadMessageSchema } from './unread-message-model';
 
 export interface IUserModel extends mongoose.Document {
   username: string;
@@ -57,9 +57,7 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
   isOnline: {
     type: Boolean
   },
-  unreadMessages: [{ 
-    type: Schema.Types.ObjectId, 
-    ref: 'UnreadMessage' }] // UnreadMessages array
+  unreadMessages: [UnreadMessageSchema] // UnreadMessages array
 }, {
   versionKey: false
 });
