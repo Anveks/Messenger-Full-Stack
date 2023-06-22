@@ -1,3 +1,5 @@
+import UnreadMessageModel from "./UnreadMessageModel";
+
 class UserModel{
   public _id: string;
   public username: string;
@@ -8,6 +10,7 @@ class UserModel{
   public profilePicture: string;
   public lastActive: string;
   public isOnline: boolean;
+  public unreadMessages: UnreadMessageModel[];
     _doc: any; // unknown stuff from mongo db
 }
 

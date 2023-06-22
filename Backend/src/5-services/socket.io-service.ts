@@ -22,16 +22,6 @@ function init(httpServer: http.Server): void {
     try {
       const newMessage = new MessageModel(message); // creating messageModel
       await dataService.saveMessage(newMessage); // sending it to the server
-
-      const { sender, recipient, content, timestamp } = newMessage; // destructure the newMessage obj    
-
-      // const unreadMessage: IUnreadMessage = {
-      //   sender,
-      //   messageBody: content,
-      //   timestamp,
-      // };
-
-      // await dataService.addUnreadMessage(recipient, unreadMessage);
       socketServer.to(roomName).emit('newMessage', newMessage);
     } catch(err: any){
         console.log(err.message);

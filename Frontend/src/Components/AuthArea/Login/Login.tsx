@@ -1,10 +1,10 @@
-import CredentialsModel from "../../../Models/CredentialsModel";
 import { useForm } from "react-hook-form";
-import notifyService from "../../../Services/NotifyService";
-import authService from "../../../Services/AuthService";
-import { authStore } from "../../../Redux/AuthState";
 import { useNavigate } from "react-router-dom";
+import CredentialsModel from "../../../Models/CredentialsModel";
+import authService from "../../../Services/AuthService";
+import notifyService from "../../../Services/NotifyService";
 import socketIoService from "../../../Services/SocketIoService";
+import messengerService from "../../../Services/MessengerService";
 
 function Login(): JSX.Element {
 
@@ -13,10 +13,11 @@ function Login(): JSX.Element {
 
     async function submit(credentials: CredentialsModel) {
         try {
+            // login
             await authService.login(credentials);
             notifyService.success("Welcome back!");
 
-            const currentId = authStore.getState().user._id;
+            // update online status
             socketIoService.updateOnlineStatus(true);
 
             navigate("/")

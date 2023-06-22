@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import "./UsersMenu.css";
 import UserModel from "../../../Models/UserModel";
+import { authStore } from "../../../Redux/AuthState";
+import { MessengerActionType, messengerStore } from "../../../Redux/MessengerState";
 import messengerService from "../../../Services/MessengerService";
 import notifyService from "../../../Services/NotifyService";
-import UserCard from "../UserCard/UserCard";
-import { authStore } from "../../../Redux/AuthState";
 import socketIoService from "../../../Services/SocketIoService";
-import { MessengerActionType, messengerStore } from "../../../Redux/MessengerState";
-import { usersStore } from "../../../Redux/UsersState";
+import UserCard from "../UserCard/UserCard";
+import "./UsersMenu.css";
 
 function UsersMenu(): JSX.Element {
     const [users, setUsers] = useState<UserModel[]>([]);
@@ -17,8 +16,6 @@ function UsersMenu(): JSX.Element {
             .then((res) => setUsers(res))
             .catch((err: any) => { notifyService.error(err.message) });
     }, []);
-
-    console.log(users);
 
     function handleMessagesHistory(id: string) {
         messengerService.getMessageHistory(id);

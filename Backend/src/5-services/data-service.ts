@@ -51,7 +51,11 @@ async function saveMessage(message: IMessageModel): Promise<IMessageModel> {
   return message;
 }
 
-
+async function getUnreadMessages(userId: string): Promise<IUnreadMessage[]> {
+  const user = await UserModel.findById(userId).populate('unreadMessages').exec();
+  if (!user) throw new ResourceNotFoundError(userId);
+  return user.unreadMessages;
+}
 
 async function getMessageHistory(userId1: string, userId2: string): Promise<IMessageModel[]> {
   const messages = await MessageModel.find({
@@ -69,5 +73,6 @@ export default {
   saveMessage,
   getMessageHistory,
   updateUserOnlineStatus,
-  addUnreadMessage
+  addUnreadMessage,
+  getUnreadMessages
 }

@@ -6,6 +6,10 @@
   grid-template-columns: repeat(6, 1fr); /* 1fr = one fraction = one unit */
 }
 
+/* .Layout > aside {
+  grid-column: span 1;
+} */
+
 .Layout > header, .Layout > footer {
   grid-column: span 6;
 }

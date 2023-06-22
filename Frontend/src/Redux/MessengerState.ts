@@ -1,10 +1,11 @@
 import { createStore } from "redux";
 import MessageModel from "../Models/MessageModel";
+import UnreadMessageModel from "../Models/UnreadMessageModel";
 
 export class MessengerState {
     public messages: MessageModel[] = [];
     public currentRecipientId: string;
-    public unreadMessges: MessageModel[] = [];
+    public unreadMessages: UnreadMessageModel[] = [];
 }
 
 export enum MessengerActionType {
@@ -12,7 +13,7 @@ export enum MessengerActionType {
     UpdateMessages,
     AddNewMessage,
     UpdateRecipientId,
-    AddUnreadMessage,
+    AddUnreadMessages,
     UpdateUnreadMessages
 }
 
@@ -35,11 +36,11 @@ export function messengerReducer(currentState = new MessengerState(), action: Me
         case MessengerActionType.UpdateMessages:
             newState.messages = [...newState.messages, action.payload];
             break;  
-        case MessengerActionType.AddUnreadMessage:
-            newState.unreadMessges = [...newState.unreadMessges, action.payload];
+        case MessengerActionType.AddUnreadMessages:
+            newState.unreadMessages = action.payload;
             break;
         case MessengerActionType.UpdateUnreadMessages:
-            //    
+            //  
     }
 
     return newState;

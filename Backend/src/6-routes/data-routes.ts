@@ -45,4 +45,21 @@ router.get("/history/:id([a-zA-Z0-9]+)", verifyLoggedIn, async(request: Request,
   }
 });
 
+// get unread messages
+router.get("/unread-messages", verifyLoggedIn, async(request: Request, response: Response, next: NextFunction) => {
+  try{
+    let userId;
+    const header = request.headers.authorization; // get the authorization header
+    if (header) {
+      const token = header.substring(7); // extract token
+      const user = await cyber.decodeToken(token);    
+      userId = user._doc._id;    
+    } 
+    const unreadMessages = await dataService.getUnreadMessages(userId);
+    response.send(unreadMessages);
+  } catch(err: any) {
+    next(err);
+  }
+});
+
 export default router;

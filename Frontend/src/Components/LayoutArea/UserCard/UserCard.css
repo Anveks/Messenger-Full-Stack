@@ -2,10 +2,23 @@
 	background-color: whitesmoke;
   padding: 1rem;
   text-align: left;
+
+  display: flex;
+  justify-content: space-between;
 }
 
 .UserCard:hover{
   background-color: lightgrey;
   transition: .5s;
   cursor: pointer;
+}
+
+.UserCard > .unread {
+  /* background-color: orange; */
+  height: 25px;
+  width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }

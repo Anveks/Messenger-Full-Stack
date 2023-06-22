@@ -4,6 +4,7 @@ import appConfig from "../Utils/AppConfig";
 import { UsersActionType, usersStore } from "../Redux/UsersState";
 import MessageModel from "../Models/MessageModel";
 import { MessengerActionType, messengerStore } from "../Redux/MessengerState";
+import UnreadMessageModel from "../Models/UnreadMessageModel";
 
 
 class MessengerService {
@@ -26,8 +27,20 @@ class MessengerService {
     const messageHistory = result.data;
     messengerStore.dispatch({
       type: MessengerActionType.FetchMessages, 
-      payload: messageHistory});
+      payload: messageHistory
+    });
     return messageHistory;
+  }
+
+  // TODO: check if clearing the unread msgs is needed on logout
+  public async getUnreadMessages(): Promise<UnreadMessageModel[]>{
+    const result = await axios.get<UnreadMessageModel[]>(appConfig.unreadMessagesUrl);
+    const unreadMessages = result.data;
+    messengerStore.dispatch({
+      type: MessengerActionType.AddUnreadMessages,
+      payload: unreadMessages
+    });
+    return unreadMessages;
   }
 
 }

@@ -1,0 +1,6 @@
+1. on each sent message an unread message gets created ++
+2. in users menu per each user there should be an icon indicating how many unread messages from each user do i have; store it in redux + subscribe to it to track the data 
+3. when you click on a conversation with a user, all the unreadMessages that have matching senderId should be deleted from the database, number should disappear; isRead property in a MessageModel should change to 'true'
+4. if it is an on-going chat, no need to create any unreadMessages - probably here the client should send an optional argument to the send() function on the backend ?
+
+extra: below each user in usersMenu display the last unread message

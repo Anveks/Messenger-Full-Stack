@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
-import "./UserCard.css";
+import UnreadMessageModel from "../../../Models/UnreadMessageModel";
+import messengerService from "../../../Services/MessengerService";
+import notifyService from "../../../Services/NotifyService";
 import socketIoService from "../../../Services/SocketIoService";
-import { messengerStore } from "../../../Redux/MessengerState";
-import { usersStore } from "../../../Redux/UsersState";
+import "./UserCard.css";
 
 function UserCard(props: any): JSX.Element {
 
     const { email, firstName, lastName, isOnline, username, _id } = props.user;
+
+    const [unreadMessages, setUnreadMessages] = useState<UnreadMessageModel[]>([]);
+
+    useEffect(() => {
+        messengerService.getUnreadMessages().then((res) => setUnreadMessages(res)).catch((err) => notifyService.error(err.message));
+    }, []);
+
+    const currentUnreadMessages = unreadMessages.filter((m) => m.sender === _id);
 
     // get updated status here? 
     const [online, setOnline] = useState<boolean>(isOnline);
@@ -23,9 +32,15 @@ function UserCard(props: any): JSX.Element {
 
     return (
         <div className="UserCard" onClick={handleClick}>
-            <p>{username}</p>
-            <p style={{ color: online ? "yellowgreen" : "red" }}>{online ? "Online" : "Offline"}</p>
-        </div>
+            <div className="name-status">
+                <p>{username}</p>
+                <p style={{ color: online ? "yellowgreen" : "red" }}>{online ? "Online" : "Offline"}</p>
+
+            </div>
+
+
+            <div className="unread" style={{ backgroundColor: currentUnreadMessages.length > 0 ? "orange" : "none" }}>{currentUnreadMessages.length > 0 ? currentUnreadMessages.length : null}</div>
+        </div >
     );
 }
 
