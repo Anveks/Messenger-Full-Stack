@@ -1,10 +1,11 @@
 import axios from "axios";
-import UserModel from "../Models/UserModel";
-import appConfig from "../Utils/AppConfig";
-import { UsersActionType, usersStore } from "../Redux/UsersState";
 import MessageModel from "../Models/MessageModel";
-import { MessengerActionType, messengerStore } from "../Redux/MessengerState";
 import UnreadMessageModel from "../Models/UnreadMessageModel";
+import UserModel from "../Models/UserModel";
+import { MessengerActionType, messengerStore } from "../Redux/MessengerState";
+import { UnreadMessagesActionType, unreadMessagesStore } from "../Redux/UnreadMessagesState";
+import { UsersActionType, usersStore } from "../Redux/UsersState";
+import appConfig from "../Utils/AppConfig";
 
 
 class MessengerService {
@@ -36,8 +37,8 @@ class MessengerService {
   public async getUnreadMessages(): Promise<UnreadMessageModel[]>{
     const result = await axios.get<UnreadMessageModel[]>(appConfig.unreadMessagesUrl);
     const unreadMessages = result.data;
-    messengerStore.dispatch({
-      type: MessengerActionType.AddUnreadMessages,
+    unreadMessagesStore.dispatch({
+      type: UnreadMessagesActionType.AddUnreadMessages,
       payload: unreadMessages
     });
     return unreadMessages;

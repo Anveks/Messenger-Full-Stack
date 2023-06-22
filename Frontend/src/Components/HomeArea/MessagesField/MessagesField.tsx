@@ -13,7 +13,12 @@ function MessagesField(props: any): JSX.Element {
     // useEffect with subscribe that we need each time user selects another UserCard:
     useEffect(() => {
         const unsubscribe = messengerStore.subscribe(() => {
-            setMessages(messengerStore.getState().messages);
+
+            const lastAction = messengerStore.getState().lastAction;
+            console.log(lastAction);
+
+            if (lastAction !== 'UpdateUnreadMessages') setMessages(messengerStore.getState().messages);
+
         });
         return () => unsubscribe();
     }, []);

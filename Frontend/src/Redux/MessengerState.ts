@@ -1,11 +1,10 @@
 import { createStore } from "redux";
 import MessageModel from "../Models/MessageModel";
-import UnreadMessageModel from "../Models/UnreadMessageModel";
 
 export class MessengerState {
+    public lastAction: string = "";
     public messages: MessageModel[] = [];
     public currentRecipientId: string;
-    public unreadMessages: UnreadMessageModel[] = [];
 }
 
 export enum MessengerActionType {
@@ -13,8 +12,6 @@ export enum MessengerActionType {
     UpdateMessages,
     AddNewMessage,
     UpdateRecipientId,
-    AddUnreadMessages,
-    UpdateUnreadMessages
 }
 
 export interface MessengerAction {
@@ -36,12 +33,10 @@ export function messengerReducer(currentState = new MessengerState(), action: Me
         case MessengerActionType.UpdateMessages:
             newState.messages = [...newState.messages, action.payload];
             break;  
-        case MessengerActionType.AddUnreadMessages:
-            newState.unreadMessages = action.payload;
-            break;
-        case MessengerActionType.UpdateUnreadMessages:
-            //  
-    }
+    };
+
+    // following the steps of a great sensei i once knew i added the last action for Redux:
+    newState.lastAction = MessengerActionType[action.type]; 
 
     return newState;
 }

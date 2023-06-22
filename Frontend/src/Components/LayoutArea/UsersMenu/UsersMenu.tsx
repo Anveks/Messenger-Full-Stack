@@ -9,6 +9,7 @@ import UserCard from "../UserCard/UserCard";
 import "./UsersMenu.css";
 
 function UsersMenu(): JSX.Element {
+
     const [users, setUsers] = useState<UserModel[]>([]);
     useEffect(() => {
         messengerService
@@ -27,7 +28,7 @@ function UsersMenu(): JSX.Element {
         const currentUserId = authStore.getState().user._doc._id;
         const roomName = [currentUserId, id].sort().join('-'); // creating a consistent pattern regardless if userId is different
         socketIoService.joinRoom(roomName);
-    }
+    };
 
     return (
         <div className="UsersMenu">

@@ -1,7 +1,7 @@
 import http from 'http';
 import socketIo from 'socket.io';
 import { MessageModel } from '../2-models/message-model';
-import { IUnreadMessage } from '../2-models/unread-message-model';
+import { IUnreadMessage, UnreadMessageSchema } from '../2-models/unread-message-model';
 import dataService from './data-service';
 
 function init(httpServer: http.Server): void {
@@ -22,7 +22,12 @@ function init(httpServer: http.Server): void {
     try {
       const newMessage = new MessageModel(message); // creating messageModel
       await dataService.saveMessage(newMessage); // sending it to the server
-      socketServer.to(roomName).emit('newMessage', newMessage);
+      socketServer.to(roomName).volatile.emit('newMessage', newMessage); // emitting to a room ?
+
+      const { sender, content, timestamp } = message;
+      const newUnreadMessage = { sender, content, timestamp }
+      socketServer.volatile.emit('newUnreadMessage', newUnreadMessage); 
+
     } catch(err: any){
         console.log(err.message);
     } 

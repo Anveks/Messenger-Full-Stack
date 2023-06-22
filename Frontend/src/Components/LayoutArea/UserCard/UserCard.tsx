@@ -4,16 +4,28 @@ import messengerService from "../../../Services/MessengerService";
 import notifyService from "../../../Services/NotifyService";
 import socketIoService from "../../../Services/SocketIoService";
 import "./UserCard.css";
+import { unreadMessagesStore } from "../../../Redux/UnreadMessagesState";
 
 function UserCard(props: any): JSX.Element {
 
     const { email, firstName, lastName, isOnline, username, _id } = props.user;
 
-    const [unreadMessages, setUnreadMessages] = useState<UnreadMessageModel[]>([]);
+    const [unreadMessages, setUnreadMessages] = useState<UnreadMessageModel[]>(unreadMessagesStore.getState().unreadMessages);
 
     useEffect(() => {
         messengerService.getUnreadMessages().then((res) => setUnreadMessages(res)).catch((err) => notifyService.error(err.message));
     }, []);
+
+    useEffect(() => {
+        const unsubscribe = unreadMessagesStore.subscribe(() => {
+            const updatedUnreadMessages = unreadMessagesStore.getState().unreadMessages;
+            setUnreadMessages(updatedUnreadMessages);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    console.log(unreadMessagesStore.getState().unreadMessages);
+
 
     const currentUnreadMessages = unreadMessages.filter((m) => m.sender === _id);
 
