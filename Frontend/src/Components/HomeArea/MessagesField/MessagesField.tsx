@@ -5,6 +5,7 @@ import { MessengerActionType, messengerStore } from "../../../Redux/MessengerSta
 import socketIoService from "../../../Services/SocketIoService";
 import Message from "../Message/Message";
 import "./MessagesField.css";
+import { unreadMessagesStore, UnreadMessagesActionType } from "../../../Redux/UnreadMessagesState";
 
 function MessagesField(props: any): JSX.Element {
 
@@ -27,6 +28,16 @@ function MessagesField(props: any): JSX.Element {
     useEffect(() => {
         socketIoService.getNewMessage((message) => {
             setMessages((prevMessages) => [...prevMessages, message]);
+        });
+    }, []);
+
+    useEffect(() => {
+        socketIoService.getNewUnreadMessage((unreadMessage) => {
+            unreadMessagesStore.dispatch({
+                type: UnreadMessagesActionType.UpdateUnreadMessages,
+                payload: unreadMessage,
+            });
+            console.log(unreadMessage);
         });
     }, []);
 

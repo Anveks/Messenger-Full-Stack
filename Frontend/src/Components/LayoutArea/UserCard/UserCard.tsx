@@ -19,15 +19,14 @@ function UserCard(props: any): JSX.Element {
     useEffect(() => {
         const unsubscribe = unreadMessagesStore.subscribe(() => {
             const updatedUnreadMessages = unreadMessagesStore.getState().unreadMessages;
+            console.log('Updated unreadMessages:', updatedUnreadMessages);
             setUnreadMessages(updatedUnreadMessages);
         });
         return () => unsubscribe();
     }, []);
 
-    console.log(unreadMessagesStore.getState().unreadMessages);
-
-
     const currentUnreadMessages = unreadMessages.filter((m) => m.sender === _id);
+    console.log('Current unreadMessages:', currentUnreadMessages);
 
     // get updated status here? 
     const [online, setOnline] = useState<boolean>(isOnline);

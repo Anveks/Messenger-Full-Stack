@@ -1,6 +1,5 @@
 import { Socket, io } from "socket.io-client";
 import { authStore } from "../Redux/AuthState";
-import { UnreadMessagesActionType, unreadMessagesStore } from "../Redux/UnreadMessagesState";
 import appConfig from "../Utils/AppConfig";
 
 class SocketIoService {
@@ -26,13 +25,7 @@ class SocketIoService {
   }
 
   public getNewUnreadMessage(callback: (message: any) => void): void {
-    this.socket.on("newUnreadMessage", (unreadMessage) => {
-      callback(unreadMessage);
-      unreadMessagesStore.dispatch({
-        type: UnreadMessagesActionType.UpdateUnreadMessages,
-        payload: unreadMessage,
-      });
-    });
+    this.socket.on("newUnreadMessage", callback);
   }  
 
   public updateOnlineStatus(isOnline: boolean): void {

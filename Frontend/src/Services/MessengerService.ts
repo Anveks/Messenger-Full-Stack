@@ -35,12 +35,15 @@ class MessengerService {
 
   // TODO: check if clearing the unread msgs is needed on logout
   public async getUnreadMessages(): Promise<UnreadMessageModel[]>{
-    const result = await axios.get<UnreadMessageModel[]>(appConfig.unreadMessagesUrl);
-    const unreadMessages = result.data;
-    unreadMessagesStore.dispatch({
-      type: UnreadMessagesActionType.AddUnreadMessages,
-      payload: unreadMessages
-    });
+    let unreadMessages = unreadMessagesStore.getState().unreadMessages;
+    if (unreadMessages.length === 0){
+      const result = await axios.get<UnreadMessageModel[]>(appConfig.unreadMessagesUrl);
+      unreadMessages = result.data;
+      unreadMessagesStore.dispatch({
+        type: UnreadMessagesActionType.AddUnreadMessages,
+        payload: unreadMessages
+      });
+    }
     return unreadMessages;
   }
 

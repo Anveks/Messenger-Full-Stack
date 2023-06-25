@@ -7,10 +7,14 @@ import notifyService from "../../../Services/NotifyService";
 import socketIoService from "../../../Services/SocketIoService";
 import UserCard from "../UserCard/UserCard";
 import "./UsersMenu.css";
+import { UnreadMessagesActionType, unreadMessagesStore } from "../../../Redux/UnreadMessagesState";
+import UnreadMessageModel from "../../../Models/UnreadMessageModel";
 
 function UsersMenu(): JSX.Element {
 
     const [users, setUsers] = useState<UserModel[]>([]);
+    const [unreadMessages, setUnreadMessages] = useState<UnreadMessageModel[]>(unreadMessagesStore.getState().unreadMessages);
+
     useEffect(() => {
         messengerService
             .getAllUsers()
@@ -29,6 +33,16 @@ function UsersMenu(): JSX.Element {
         const roomName = [currentUserId, id].sort().join('-'); // creating a consistent pattern regardless if userId is different
         socketIoService.joinRoom(roomName);
     };
+
+    // useEffect(() => {
+    //     socketIoService.getNewUnreadMessage((unreadMessage) => {
+    //         unreadMessagesStore.dispatch({
+    //             type: UnreadMessagesActionType.UpdateUnreadMessages,
+    //             payload: unreadMessage,
+    //         });
+    //         console.log(unreadMessage);
+    //     });
+    // }, []);
 
     return (
         <div className="UsersMenu">
