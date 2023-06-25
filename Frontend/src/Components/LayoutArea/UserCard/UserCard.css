@@ -14,9 +14,9 @@
 }
 
 .UserCard > .unread {
-  /* background-color: orange; */
-  height: 25px;
-  width: 25px;
+  background-color: orange;
+  height: 15px;
+  width: 15px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -6,6 +6,8 @@ import { MessengerActionType, messengerStore } from "../Redux/MessengerState";
 import { UnreadMessagesActionType, unreadMessagesStore } from "../Redux/UnreadMessagesState";
 import { UsersActionType, usersStore } from "../Redux/UsersState";
 import appConfig from "../Utils/AppConfig";
+import socketIoService from "./SocketIoService";
+import { authStore } from "../Redux/AuthState";
 
 
 class MessengerService {
@@ -45,6 +47,25 @@ class MessengerService {
       });
     }
     return unreadMessages;
+  }
+
+  public async clearUnreadMessages(senderId: string): Promise<void> {  
+    const unreadMessages = unreadMessagesStore.getState().unreadMessages;
+    const matchingMessages = unreadMessages.filter((message) => message.sender === senderId);
+
+    matchingMessages.forEach((match) => {
+      const index = unreadMessages.indexOf(match); // finding the index of each match
+      unreadMessages.splice(index, 1); // deleting it
+    });
+
+    // updating the unread messages again:
+    unreadMessagesStore.dispatch({ 
+      type: UnreadMessagesActionType.AddUnreadMessages, 
+      payload: unreadMessages
+    });
+
+    // clearing the unread msgs on the backend:
+    socketIoService.clearUnreadMessages(authStore.getState().user._doc._id, senderId);
   }
 
 }

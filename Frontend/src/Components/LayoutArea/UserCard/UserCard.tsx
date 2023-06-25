@@ -10,23 +10,18 @@ function UserCard(props: any): JSX.Element {
 
     const { email, firstName, lastName, isOnline, username, _id } = props.user;
 
-    const [unreadMessages, setUnreadMessages] = useState<UnreadMessageModel[]>(unreadMessagesStore.getState().unreadMessages);
+    const [unreadMessages, setUnreadMessages] = useState<UnreadMessageModel[]>(unreadMessagesStore.getState().unreadMessages.filter((m) => m.sender === _id));
 
     useEffect(() => {
-        messengerService.getUnreadMessages().then((res) => setUnreadMessages(res)).catch((err) => notifyService.error(err.message));
+        messengerService.getUnreadMessages();
     }, []);
 
     useEffect(() => {
         const unsubscribe = unreadMessagesStore.subscribe(() => {
-            const updatedUnreadMessages = unreadMessagesStore.getState().unreadMessages;
-            console.log('Updated unreadMessages:', updatedUnreadMessages);
-            setUnreadMessages(updatedUnreadMessages);
+            setUnreadMessages(unreadMessagesStore.getState().unreadMessages.filter((m) => m.sender === _id));
         });
         return () => unsubscribe();
     }, []);
-
-    const currentUnreadMessages = unreadMessages.filter((m) => m.sender === _id);
-    console.log('Current unreadMessages:', currentUnreadMessages);
 
     // get updated status here? 
     const [online, setOnline] = useState<boolean>(isOnline);
@@ -38,7 +33,8 @@ function UserCard(props: any): JSX.Element {
     }, []);
 
     function handleClick() {
-        props.getId(props.user._id)
+        props.getId(_id);
+        messengerService.clearUnreadMessages(_id);
     }
 
     return (
@@ -46,11 +42,10 @@ function UserCard(props: any): JSX.Element {
             <div className="name-status">
                 <p>{username}</p>
                 <p style={{ color: online ? "yellowgreen" : "red" }}>{online ? "Online" : "Offline"}</p>
-
             </div>
 
 
-            <div className="unread" style={{ backgroundColor: currentUnreadMessages.length > 0 ? "orange" : "none" }}>{currentUnreadMessages.length > 0 ? currentUnreadMessages.length : null}</div>
+            <div className="unread" style={{ backgroundColor: unreadMessages.length === 0 ? "transparent" : "orange" }}></div>
         </div >
     );
 }

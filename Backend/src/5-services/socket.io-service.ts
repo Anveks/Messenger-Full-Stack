@@ -22,15 +22,25 @@ function init(httpServer: http.Server): void {
     try {
       const newMessage = new MessageModel(message); // creating messageModel
       await dataService.saveMessage(newMessage); // sending it to the server
-      socketServer.to(roomName).volatile.emit('newMessage', newMessage); // emitting to a room ?
+
+      socketServer.to(roomName).emit('newMessage', {newMessage, roomName}); // sending back the message and the roomName
 
       const { sender, content, timestamp } = message;
       const newUnreadMessage = { sender, content, timestamp }
-      socketServer.volatile.emit('newUnreadMessage', newUnreadMessage); 
+      socketServer.emit('newUnreadMessage', newUnreadMessage); 
 
     } catch(err: any){
-        console.log(err.message);
+      console.log(err.message);
     } 
+  });
+
+  socket.on('clearUnreadMessages', async (data: any) => {
+    try {
+      const { userId, senderId } = data;
+      await dataService.clearUnreadMessages(userId, senderId);
+    } catch(err: any) {
+      console.log(err.message);
+    }
   });
 
   socket.on("updateStatus", (data) => { // getting updated data on login-logout

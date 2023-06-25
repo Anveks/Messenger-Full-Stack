@@ -24,9 +24,16 @@ async function addUnreadMessage(userId: string, message: IUnreadMessage): Promis
 }
 
 async function clearUnreadMessages(userId: string, senderId: string): Promise<void>{
-  // find user
-  // get his unread messages
-  // delete all the unread messages with certain senderId
+  // find user:
+  const user = await UserModel.findById(userId);
+  if (!user) throw new ResourceNotFoundError(userId);
+  // get his unread messages:
+  const unreadMessages = user.unreadMessages;
+  // filter the relevant messages:
+  const updatedUnreadMessages = unreadMessages.filter((m) => { m.sender !== senderId });
+  // override the unread messages:
+  user.unreadMessages = updatedUnreadMessages;
+  user.save();
 }
 
 async function saveMessage(message: IMessageModel): Promise<IMessageModel> {
@@ -74,5 +81,6 @@ export default {
   getMessageHistory,
   updateUserOnlineStatus,
   addUnreadMessage,
-  getUnreadMessages
+  getUnreadMessages,
+  clearUnreadMessages
 }

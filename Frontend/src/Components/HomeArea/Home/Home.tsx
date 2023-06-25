@@ -21,6 +21,7 @@ function Home(): JSX.Element {
     function handleSendMessage(messageContent: string) {
         const currentId = authStore.getState().user._doc._id;
         const roomName = [currentId, recipientId].sort().join("-");
+
         const message: any = {
             sender: authStore.getState().user._doc._id,
             recipient: recipientId,
@@ -29,6 +30,11 @@ function Home(): JSX.Element {
         };
 
         socketIoService.sendMessage(roomName, message);
+
+        // messengerStore.dispatch({
+        //     type: MessengerActionType.UpdateMessages,
+        //     payload: message
+        // });
     };
 
 

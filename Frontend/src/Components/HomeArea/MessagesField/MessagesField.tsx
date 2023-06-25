@@ -14,20 +14,15 @@ function MessagesField(props: any): JSX.Element {
     // useEffect with subscribe that we need each time user selects another UserCard:
     useEffect(() => {
         const unsubscribe = messengerStore.subscribe(() => {
-
-            const lastAction = messengerStore.getState().lastAction;
-            console.log(lastAction);
-
-            if (lastAction !== 'UpdateUnreadMessages') setMessages(messengerStore.getState().messages);
-
+            setMessages(messengerStore.getState().messages);
         });
         return () => unsubscribe();
     }, []);
 
     // updating the messages state each time we recieve a new message:
     useEffect(() => {
-        socketIoService.getNewMessage((message) => {
-            setMessages((prevMessages) => [...prevMessages, message]);
+        socketIoService.getNewMessage((data) => {
+            setMessages((prevMessages) => [...prevMessages, data.newMessage]);
         });
     }, []);
 
@@ -37,7 +32,6 @@ function MessagesField(props: any): JSX.Element {
                 type: UnreadMessagesActionType.UpdateUnreadMessages,
                 payload: unreadMessage,
             });
-            console.log(unreadMessage);
         });
     }, []);
 
