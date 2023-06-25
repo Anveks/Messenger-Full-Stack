@@ -29,8 +29,9 @@ async function clearUnreadMessages(userId: string, senderId: string): Promise<vo
   if (!user) throw new ResourceNotFoundError(userId);
   // get his unread messages:
   const unreadMessages = user.unreadMessages;
+  if (unreadMessages.length === 0) return;
   // filter the relevant messages:
-  const updatedUnreadMessages = unreadMessages.filter((m) => { m.sender !== senderId });
+  const updatedUnreadMessages = unreadMessages.filter((m) => { return m.sender !== senderId });
   // override the unread messages:
   user.unreadMessages = updatedUnreadMessages;
   user.save();

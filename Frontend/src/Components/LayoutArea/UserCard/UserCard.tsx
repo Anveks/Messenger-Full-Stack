@@ -5,12 +5,13 @@ import notifyService from "../../../Services/NotifyService";
 import socketIoService from "../../../Services/SocketIoService";
 import "./UserCard.css";
 import { unreadMessagesStore } from "../../../Redux/UnreadMessagesState";
+import { usersStore } from "../../../Redux/UsersState";
 
 function UserCard(props: any): JSX.Element {
 
     const { email, firstName, lastName, isOnline, username, _id } = props.user;
-
     const [unreadMessages, setUnreadMessages] = useState<UnreadMessageModel[]>(unreadMessagesStore.getState().unreadMessages.filter((m) => m.sender === _id));
+    const activeUser = _id === usersStore.getState().activeUser;
 
     useEffect(() => {
         messengerService.getUnreadMessages();
@@ -38,10 +39,10 @@ function UserCard(props: any): JSX.Element {
     }
 
     return (
-        <div className="UserCard" onClick={handleClick}>
+        <div className="UserCard" onClick={handleClick} style={{ backgroundColor: activeUser ? "gray" : "", color: activeUser ? "white" : "" }}>
             <div className="name-status">
                 <p>{username}</p>
-                <p style={{ color: online ? "yellowgreen" : "red" }}>{online ? "Online" : "Offline"}</p>
+                <p style={{ color: online ? "yellowgreen" : "#ff8a69" }}>{online ? "Online" : "Offline"}</p>
             </div>
 
 

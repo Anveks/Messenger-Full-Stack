@@ -8,3 +8,6 @@ extra: below each user in usersMenu display the last unread message
 TODO 25.06:
 1. add a condition that would block the unread messages redux update if you are getting messages in the current conversation;
 2. clear message and unread message data on logout;
+
+
+check why setOnline to false doesnt work on logout

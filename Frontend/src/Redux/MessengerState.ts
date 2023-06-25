@@ -11,9 +11,9 @@ export class MessengerState {
 export enum MessengerActionType {
     FetchMessages,
     UpdateMessages,
-    AddNewMessage,
     UpdateRecipientId,
-    UpdateActiveRoom
+    UpdateActiveRoom,
+    Reset
 }
 
 export interface MessengerAction {
@@ -38,6 +38,9 @@ export function messengerReducer(currentState = new MessengerState(), action: Me
         case MessengerActionType.UpdateActiveRoom:
             newState.activeRoom = action.payload;
             break;
+        case MessengerActionType.Reset:
+            newState.messages = [];
+            break;    
     };
 
     // following the steps of a great sensei i once knew i added the last action for Redux:

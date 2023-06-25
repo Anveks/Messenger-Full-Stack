@@ -8,7 +8,8 @@ export class UnreadMessagesState {
 
 export enum UnreadMessagesActionType {
     AddUnreadMessages,
-    UpdateUnreadMessages
+    UpdateUnreadMessages,
+    Reset
 }
 
 export interface UnreadMessagesAction {
@@ -27,7 +28,10 @@ export function unreadMessagesReducer(currentState = new UnreadMessagesState(), 
         case UnreadMessagesActionType.UpdateUnreadMessages:
             // newState.unreadMessages = [...newState.unreadMessages, action.payload];
             newState.unreadMessages.push(action.payload);
-            break;    
+            break;
+        case UnreadMessagesActionType.Reset:
+            newState.unreadMessages = [];
+            break;
     };
 
     // following the steps of a great sensei i once knew i added the last action for Redux:

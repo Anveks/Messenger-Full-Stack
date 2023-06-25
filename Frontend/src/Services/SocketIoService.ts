@@ -2,6 +2,7 @@ import { Socket, io } from "socket.io-client";
 import { authStore } from "../Redux/AuthState";
 import appConfig from "../Utils/AppConfig";
 import { messengerStore } from "../Redux/MessengerState";
+import { usersStore } from "../Redux/UsersState";
 
 class SocketIoService {
 
@@ -30,8 +31,12 @@ class SocketIoService {
   }
 
   public getNewUnreadMessage(callback: (message: any) => void): void {
-    this.socket.on("newUnreadMessage", callback);
-  }  
+    this.socket.on("newUnreadMessage", (message: any) => {
+      if (message.sender !== usersStore.getState().activeUser) {
+        callback(message);
+      }
+    });
+  }
 
   public clearUnreadMessages(userId: string, senderId: string): void {
     this.socket.emit("clearUnreadMessages", {userId, senderId});

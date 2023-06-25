@@ -7,6 +7,7 @@ import notifyService from "../../../Services/NotifyService";
 import socketIoService from "../../../Services/SocketIoService";
 import UserCard from "../UserCard/UserCard";
 import "./UsersMenu.css";
+import { UsersActionType, usersStore } from "../../../Redux/UsersState";
 
 function UsersMenu(): JSX.Element {
 
@@ -36,6 +37,15 @@ function UsersMenu(): JSX.Element {
         messengerStore.dispatch({
             type: MessengerActionType.UpdateActiveRoom,
             payload: roomName
+        });
+
+        handleActiveUser(id);
+    };
+
+    function handleActiveUser(id: string) {
+        usersStore.dispatch({
+            type: UsersActionType.SetActiveUser,
+            payload: id
         });
     };
 
