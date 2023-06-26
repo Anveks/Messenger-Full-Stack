@@ -1,11 +1,11 @@
 .MessagesField {
   height: 87%;
-  background-color: lightgrey;
   width: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
   scrollbar-width: thin; /* For Firefox */
   scrollbar-color: transparent transparent; /* For Firefox */
+  background-color: white !important;
 }
 
 /* For WebKit-based browsers (Chrome, Safari) */

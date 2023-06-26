@@ -1,10 +1,9 @@
 .SendBar {
-  background-color: lightgray;
   display: flex;
   padding-left: 30%;
   width: inherit;
+  background-color: white !important;
 }
-
 
 .SendBar > form {
 	display: flex;
@@ -12,14 +11,16 @@
   margin-top: 1%;
   gap: 1%;
   align-items: center;
+  background-color: white !important;
 }
 
 .SendBar > form > input {
   padding: 3%;
   border-radius: 12px;
   border: transparent;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   width: 300px;
+  background-color: lightgray;
+  /* box-shadow: 0 8px 8px rgba(0, 0, 0, 0.55); */
 }
 
 .SendBar > form > button {
@@ -29,7 +30,6 @@
   align-items: center;
   gap: 15%;
   font-weight: bold;
-  /* background-color: rgba(255, 255, 255, 0.5); */
   width: 7%;
   border-radius: 12px;
   padding-left: 1%;
