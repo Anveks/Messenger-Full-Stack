@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import UserModel from "../../../Models/UserModel";
 import { authStore } from "../../../Redux/AuthState";
-import Login from "../../AuthArea/Login/Login";
+import Login from "../../AuthArea/Auth/Auth";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import Routing from "../Routing/Routing";

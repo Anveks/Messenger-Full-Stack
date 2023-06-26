@@ -8,7 +8,8 @@ export class UsersState {
 
 export enum UsersActionType {
   FetchUsers,
-  SetActiveUser
+  SetActiveUser,
+  Reset
 }
 
 export interface UsersAction {
@@ -26,7 +27,11 @@ export function usersReducer(currentState = new UsersState(), action: UsersActio
       break;
     case UsersActionType.SetActiveUser:
       newState.activeUser = action.payload;
-      break;    
+      break;   
+    case UsersActionType.Reset:
+      newState.activeUser = "";
+      newState.users = [];
+      break;
   }
 
   return newState;

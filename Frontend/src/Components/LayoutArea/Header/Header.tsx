@@ -3,7 +3,8 @@ import Logout from "../../AuthArea/Logout/Logout";
 import "./Header.css";
 
 function Header(): JSX.Element {
-    const username = authStore.getState().user._doc.username;
+
+    const username = authStore.getState().user?._doc.username;
 
     return (
         <div className="Header">

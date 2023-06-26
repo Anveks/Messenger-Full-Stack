@@ -1,7 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "../../AuthArea/Login/Login";
-import Register from "../../AuthArea/Register/Register";
-import MessagesField from "../../HomeArea/MessagesField/MessagesField";
+import Auth from "../../AuthArea/Auth/Auth";
 import Home from "../../HomeArea/Home/Home";
 
 function Routing(): JSX.Element {
@@ -14,8 +12,7 @@ function Routing(): JSX.Element {
       <Route path="/home" element={<Home />} />
 
       {/* auth routes */}
-      <Route path="/messenger/login" element={<Login />} />
-      <Route path="/messenger/register" element={<Register />} />
+      <Route path="/messenger/login" element={<Auth />} />
     </Routes>
   );
 }
