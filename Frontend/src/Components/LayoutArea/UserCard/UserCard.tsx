@@ -9,7 +9,7 @@ import { usersStore } from "../../../Redux/UsersState";
 
 function UserCard(props: any): JSX.Element {
 
-    const { email, firstName, lastName, isOnline, username, _id } = props.user;
+    const { email, firstName, lastName, isOnline, username, _id, profilePicture } = props.user;
     const [unreadMessages, setUnreadMessages] = useState<UnreadMessageModel[]>(unreadMessagesStore.getState().unreadMessages.filter((m) => m.sender === _id));
     const activeUser = _id === usersStore.getState().activeUser;
 
@@ -40,6 +40,9 @@ function UserCard(props: any): JSX.Element {
 
     return (
         <div className="UserCard" onClick={handleClick} style={{ backgroundColor: activeUser ? "gray" : "", color: activeUser ? "white" : "" }}>
+
+            <img src={profilePicture} alt="profilePicture" />
+
             <div className="name-status">
                 <p>{username}</p>
                 <p style={{ color: online ? "yellowgreen" : "#ff8a69" }}>{online ? "Online" : "Offline"}</p>

@@ -1,8 +1,9 @@
 import express, { NextFunction, Request, Response } from "express";
-import verifyLoggedIn from "../3-middleware/verify-logged-in";
-import dataService from "../5-services/data-service";
 import { MessageModel } from "../2-models/message-model";
+import verifyLoggedIn from "../3-middleware/verify-logged-in";
 import cyber from "../4-utils/cyber";
+import imageHandler from "../4-utils/image-handler";
+import dataService from "../5-services/data-service";
 
 const router = express.Router();
 
@@ -59,6 +60,18 @@ router.get("/unread-messages", verifyLoggedIn, async(request: Request, response:
     response.send(unreadMessages);
   } catch(err: any) {
     next(err);
+  }
+});
+
+// img route
+router.get("/images/:imageName", async (request: Request, response: Response, next: NextFunction) => {
+  try {
+      const imageName = request.params.imageName;
+      const imagePath = imageHandler.getImagePath(imageName);
+      response.sendFile(imagePath);
+  }
+  catch(err: any) {
+      next(err);
   }
 });
 

@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { IUnreadMessage, UnreadMessageSchema } from './unread-message-model';
+import { UploadedFile } from "express-fileupload";
 
 export interface IUserModel extends mongoose.Document {
   username: string;
@@ -8,6 +9,7 @@ export interface IUserModel extends mongoose.Document {
   email: string;
   password: string;
   profilePicture: string;
+  pictureFile?: UploadedFile
   lastActive: string;
   isOnline: boolean;
   unreadMessages: IUnreadMessage[]; // adding an array of unread messages -> each follows the IUnreadMessage model; i hope it is a good practice...
