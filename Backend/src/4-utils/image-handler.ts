@@ -36,9 +36,17 @@ async function deleteImage(imageName: string): Promise<void>{
   }
 }
 
+function generateImageName(imageName: string): string {
+  const fileExtension = imageName.slice(imageName.lastIndexOf("."));
+  const uuidName = uuid() + fileExtension;
+  return uuidName
+}
+
 export default {
+  imagesFolder,
   getImagePath,
   saveFile,
   updateImage,
-  deleteImage
+  deleteImage,
+  generateImageName
 }

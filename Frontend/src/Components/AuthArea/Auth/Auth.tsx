@@ -13,6 +13,12 @@ function Login(): JSX.Element {
     let { register, handleSubmit } = useForm(); // had to omit the Model check here
     const navigate = useNavigate();
 
+    const [file, setFile] = useState<File>(null);
+    const changeHandler = (e: any) => {
+        const file1 = e.target.files[0];
+        setFile(file1);
+    }
+
     async function submit(authData: any) { // had to omit the validation check of authData
         if (authState === AuthMode.Login) {
             try {
@@ -29,11 +35,14 @@ function Login(): JSX.Element {
             }
         } else {
             try {
+                authData.pictureFile = file;
                 await authService.register(authData);
                 notifyService.success("Welcome!");
                 navigate("/home");
             }
             catch (err: any) {
+                console.log(err);
+
                 notifyService.error(err);
             }
         };
@@ -63,7 +72,7 @@ function Login(): JSX.Element {
             <h3>Chat App Register</h3>
             <hr />
 
-            <form onSubmit={handleSubmit(submit)}>
+            <form onSubmit={handleSubmit(submit)} encType="multipart/form-data">
                 <label>First Name:</label>
                 <input type="text" name="firstName" placeholder="John" {...register("firstName")} />
 
@@ -80,7 +89,9 @@ function Login(): JSX.Element {
                 <input type="text" name="username" placeholder='John_Doe' {...register("username")} />
 
                 <label>Profile Picture:</label>
-                <input type="file" name="profilePicture" {...register("profilePicture")} />
+                <input type="file" accept="image/*" name="pictureFile" {...register("pictureFile")} onChangeCapture={changeHandler} />
+
+                {file && <img src={URL.createObjectURL(file)} />}
 
                 <button>register</button>
             </form>

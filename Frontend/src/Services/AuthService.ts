@@ -3,11 +3,14 @@ import appConfig from '../Utils/AppConfig';
 import { AuthActionType, authStore } from '../Redux/AuthState';
 import UserModel from "../Models/UserModel";
 import CredentialsModel from '../Models/CredentialsModel';
+import FormData from "form-data";
 
 class AuthService {
 
-    public async register(user: UserModel): Promise<void> {
-        const response = await axios.post<string>(appConfig.registerUrl, user);
+    public async register(user: UserModel): Promise<void> {      
+        const headers = { "Content-Type": "multipart/form-data" };
+        console.log(user);
+        const response = await axios.post<UserModel>(appConfig.registerUrl, user, {headers});
         const token = response.data;
         authStore.dispatch({ type: AuthActionType.Register, payload: token });
     }

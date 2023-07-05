@@ -8,6 +8,7 @@ class UserModel{
   public email: string;
   public password: string;
   public profilePicture: string;
+  public pictureFile: File;
   public lastActive: string;
   public isOnline: boolean;
   public unreadMessages: UnreadMessageModel[];
