@@ -53,6 +53,9 @@ export const UserSchema = new mongoose.Schema<IUserModel>({
     minlength: [2, "Password too short."],
     maxlength: [2000, "Password too long."]
   },
+  profilePicture:{
+    type: String
+  },
   lastActive: {
     type: String
   },

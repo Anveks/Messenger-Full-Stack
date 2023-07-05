@@ -27,12 +27,9 @@ async function register(user: IUserModel): Promise<string>{
   if (err) throw new ValidationError(err.message);
   if (await isEmailTaken(user.email)) throw new ValidationError(`${user.email} is already in use.`);
 
-  let profilePictureName: any = null; // setting the name to null
-  if (user.pictureFile) {
-    profilePictureName = await imageHandler.saveFile(user.pictureFile); // generating uuid name and saving the file
-    user.profilePicture = appConfig.imageUrl + profilePictureName; 
-  }
-  delete user.pictureFile;
+  user.profilePicture = appConfig.imageUrl + user.profilePicture; // adding the profile pic
+  delete user.pictureFile; // maybe i should delete it, but not sure...
+
   user.password = cyber.hashPassword(user.password); // hashing the password
   await user.save(); // adding new user to the db
 
